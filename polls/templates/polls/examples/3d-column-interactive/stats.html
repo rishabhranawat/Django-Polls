@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+    {% load staticfiles %}
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highcharts Example</title>
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<style type="text/css">
+#container, #sliders {
+	min-width: 310px; 
+	max-width: 800px;
+	margin: 0 auto;
+}
+#container {
+	height: 400px; 
+}
+
+#container2{
+    height: 400px;
+    width: 800px;
+    margin: 0 auto;
+}
+</style>
+<script type="text/javascript">
+$(function () {
+    // Set up the chart
+    chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            margin: 75,
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 15,
+                depth: 50,
+                viewDistance: 25,
+            }
+        },
+        title: {
+            text: 'Results for Poll 1'
+        },
+        subtitle: {
+            text: 'Test options by dragging the sliders below'
+        },
+        xAxis: {
+            {% autoescape off %}
+            categories: {{ choices_all}}
+            {%endautoescape%}
+        },
+        plotOptions: {
+            column: {
+                depth: 25
+            }
+        },
+        series: [
+        {
+            data: {{votes1}},
+            name: 'POLL 1',
+            color: '#FF0000'
+        },
+
+        {
+            data: {{votes2}},
+            name: 'POLL 2',
+            color: '#0000CC'
+
+        },
+
+
+        {
+            data: {{votes3}},
+            name: 'POLL 3',
+            color: '#000000'
+
+        }
+
+        ]
+    })
+
+});
+
+
+$(function () {
+    // Set up the chart
+    chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'container2',
+            type: 'column',
+            margin: 75,
+            options3d: {
+                enabled: true,
+                alpha: 15,
+                beta: 15,
+                depth: 50,
+                viewDistance: 25
+            }
+        },
+        title: {
+            text: 'Results for Poll 1'
+        },
+        subtitle: {
+            text: 'Test options by draggi2g the sliders below'
+        },
+        xAxis: {
+            categories: {{choices_all|safe}}
+        },
+        plotOptions: {
+            column: {
+                depth: 25
+            }
+        },
+        series: [{
+            data: {{votes2}}
+        }]
+    })
+
+});
+
+</script>
+	</head>
+	<body>
+<script src="{% static 'polls/js/highcharts.js' %}"></script>
+<script src="{% static 'polls/js/highcharts-3d.js' %}"></script>
+<script src="{% static 'polls/js/exporting.js' %}"></script>
+
+<div id="container"></div>
+<div id="container2"></div>
+
+	</body>
+</html>
